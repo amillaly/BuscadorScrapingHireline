@@ -22,7 +22,7 @@ function App() {
     setBusquedaCompletada(false);
     
     try {
-      const response = await fetch('http://localhost:3002/api/scraping', {
+      const response = await fetch('https://buscador-scraping-hireline.vercel.app/api/scraping', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
