@@ -1,9 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const { realizarScraping } = require('./src/services/scrapingService');
+const path = require('path');
 
 const app = express();
-const PORT = 3002;
+const PORT = process.env.PORT || 3002;
 
 // Middleware
 app.use(cors());
@@ -44,6 +45,20 @@ app.get('/api/test', (req, res) => {
     res.json({ message: 'Servidor funcionando correctamente' });
 });
 
-app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
-}); 
+// Servir archivos estáticos del frontend
+app.use(express.static(path.join(__dirname, 'build')));
+
+// Ruta para servir el frontend React
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+// Para desarrollo local
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Servidor corriendo en puerto ${PORT}`);
+    });
+}
+
+// Para Vercel
+module.exports = app; 
