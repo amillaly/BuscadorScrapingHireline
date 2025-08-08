@@ -26,7 +26,7 @@ function App() {
       const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
       const apiUrl = isDevelopment 
         ? 'http://localhost:3002/api/scraping'
-        : 'https://buscador-scraping-hireline.vercel.app/api/scraping';
+        : '/api/scraping'; // URL relativa para Vercel
       
       const response = await fetch(apiUrl, {
         method: 'POST',
