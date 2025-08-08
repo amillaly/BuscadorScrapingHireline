@@ -22,7 +22,13 @@ function App() {
     setBusquedaCompletada(false);
     
     try {
-      const response = await fetch('http://localhost:3002/api/scraping', {
+      // Detectar automáticamente si estamos en desarrollo local o en producción
+      const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+      const apiUrl = isDevelopment 
+        ? 'http://localhost:3002/api/scraping'
+        : 'https://buscador-scraping-hireline.vercel.app/api/scraping';
+      
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
