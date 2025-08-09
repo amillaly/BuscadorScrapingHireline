@@ -5,8 +5,9 @@ async function realizarScraping(terminoBusqueda) {
         console.log('Iniciando scraping para:', terminoBusqueda);
         
         const navegador = await puppeteer.launch({
-            headless: true, // Cambiar a headless para mejor rendimiento
-            slowMo: 100, // Reducir el delay
+            headless: true,
+            slowMo: 100,
+            executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
             args: [
                 '--no-sandbox', 
                 '--disable-setuid-sandbox', 
@@ -15,7 +16,14 @@ async function realizarScraping(terminoBusqueda) {
                 '--disable-features=VizDisplayCompositor',
                 '--disable-extensions',
                 '--disable-plugins',
-                '--disable-images' // No cargar imágenes para mayor velocidad
+                '--disable-images',
+                '--disable-gpu',
+                '--disable-software-rasterizer',
+                '--disable-background-timer-throttling',
+                '--disable-backgrounding-occluded-windows',
+                '--disable-renderer-backgrounding',
+                '--disable-field-trial-config',
+                '--disable-ipc-flooding-protection'
             ]
         });
 
